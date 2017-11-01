@@ -35,6 +35,7 @@ public class CalcActivity extends AppCompatActivity implements View.OnClickListe
     private double mAccumulator;
     private char mOp;
     private boolean equalsBefore;
+    private boolean operatioBefore;
     private double secondNumber;
 
     @Override
@@ -56,6 +57,7 @@ public class CalcActivity extends AppCompatActivity implements View.OnClickListe
         mOp = 0;
         resultTextView.setText("0");
         equalsBefore = false;
+        operatioBefore = false;
     }
 
     /**
@@ -182,7 +184,7 @@ public class CalcActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         equalsBefore = true;
-
+        operatioBefore = false;
         mAccumulator = total;
 
         long totalInt = (long) total;
@@ -198,8 +200,7 @@ public class CalcActivity extends AppCompatActivity implements View.OnClickListe
         mOp = button.getText().toString().charAt(0);
         mAccumulator = Double.parseDouble(resultTextView.getText().toString());
 
-        resultTextView.setText("0");
-
+        operatioBefore = true;
         equalsBefore = false;
     }
 
@@ -244,7 +245,7 @@ public class CalcActivity extends AppCompatActivity implements View.OnClickListe
         Log.d("CalcActivity", "mAccumulator = " + mAccumulator + " | mOp = " + mOp);
 
 
-        if (actualNumber.equals("0")) {
+        if (actualNumber.equals("0") || operatioBefore) {
             resultTextView.setText(digit);
         } else {
             resultTextView.setText(
@@ -258,6 +259,6 @@ public class CalcActivity extends AppCompatActivity implements View.OnClickListe
             equalBtn.setEnabled(true);
         }
 
-
+        operatioBefore = false;
     }
 }
